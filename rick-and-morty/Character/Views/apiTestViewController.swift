@@ -3,16 +3,20 @@ import Network
 
 var heroRes3 : [Hero] = []
 
-class apiTestViewController: UIViewController, UISearchBarDelegate {
+class apiTestViewController: UIViewController {
     @IBOutlet weak var testingCollectionView: UICollectionView!
     @IBOutlet weak var navBarItem: UINavigationItem!
     @IBOutlet weak var alterSearchBar: UISearchBar!
     
     var heroRes2 = [Hero]()
+    var searching = false
+    var searched = [Hero]()
+    let searchController = UISearchController(searchResultsController: nil)
 
     override func viewDidLoad() {
         super.viewDidLoad()
        Appearance()
+        configureSearchController()
 
         let _url = "https://rickandmortyapi.com/api/character/"
         
@@ -102,11 +106,52 @@ class apiTestViewController: UIViewController, UISearchBarDelegate {
             performSegue(withIdentifier: "toFilter", sender: self)
         }
     }
+    
+    func configureSearchController() {
+        searchController.loadViewIfNeeded()
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.enablesReturnKeyAutomatically = false
+        searchController.searchBar.returnKeyType = UIReturnKeyType.done
+        self.navigationItem.searchController = searchController
+        self.navigationItem.hidesSearchBarWhenScrolling = false
+        definesPresentationContext = true
+        searchController.searchBar.placeholder = "Введите имя"
+    }
 }
 
 
 
-extension apiTestViewController: UICollectionViewDataSource , UICollectionViewDelegate {
+extension apiTestViewController: UICollectionViewDataSource , UICollectionViewDelegate, UISearchResultsUpdating, UISearchBarDelegate {
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchText = searchController.searchBar.text!
+        
+        if !searchText.isEmpty {
+            searching = true
+            searched.removeAll()
+            
+            for x in heroRes2 {
+                if x.name.lowercased().contains(searchText.lowercased())
+                {
+                    searched.append(x)
+                }
+            }
+            
+        } else {
+            searching = false
+            searched.removeAll()
+            searched = heroRes3
+        }
+        testingCollectionView.reloadData()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searching = false
+        searched.removeAll()
+        testingCollectionView.reloadData()
+    }
+    
     
      func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
     switch kind {
@@ -121,19 +166,32 @@ extension apiTestViewController: UICollectionViewDataSource , UICollectionViewDe
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if searching {
+            return searched.count
+        }
+        else {
         return 16
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "test1CollectionViewCell", for: indexPath) as! test1CollectionViewCell
-      cell.setup(hero: (self.heroRes2[indexPath.row]) )
+      
         heroRes3 = heroRes2
+        
+        if searching {
+            cell.setup(hero: self.searched[indexPath.row])
+        } else {
+            cell.setup(hero: (self.heroRes2[indexPath.row]) )
+        }
         
         cell.layer.borderColor = UIColor.black.cgColor
         cell.layer.borderWidth = 0.5
         cell.layer.cornerRadius = 20
         cell.image.backgroundColor = .white
         cell.image.contentMode = .scaleAspectFill
+        
+       
         
         
         return cell
