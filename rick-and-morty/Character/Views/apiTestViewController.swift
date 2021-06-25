@@ -1,23 +1,19 @@
 import UIKit
 import Network
 
+var heroRes3 : [Hero] = []
 
-
-class apiTestViewController: UIViewController {
+class apiTestViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var testingCollectionView: UICollectionView!
     @IBOutlet weak var navBarItem: UINavigationItem!
     @IBOutlet weak var alterSearchBar: UISearchBar!
     
     var heroRes2 = [Hero]()
-    var heroRes3 : [Hero] = []
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
        Appearance()
 
-        
         let _url = "https://rickandmortyapi.com/api/character/"
         
         for x in 0..<30 {
@@ -40,7 +36,6 @@ class apiTestViewController: UIViewController {
         print(fil.count)
         
     }
-    
     
     func getFromJson(url: URL, index: Int)  {
     
@@ -69,7 +64,7 @@ class apiTestViewController: UIViewController {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         self.heroRes2.removeAll()
-        for item in self.heroRes3 {
+        for item in heroRes3 {
             if (item.name.lowercased().contains((alterSearchBar.text?.lowercased())!)) {
                 self.heroRes2.append(item)
             }
@@ -80,7 +75,6 @@ class apiTestViewController: UIViewController {
         }
         self.testingCollectionView.reloadData()
     }
-    
     
     
     func Appearance() {
@@ -98,18 +92,12 @@ class apiTestViewController: UIViewController {
             layout.headerReferenceSize = CGSize(width: 100, height: 40)
 
         }
-        
     }
 }
 
 
 
 extension apiTestViewController: UICollectionViewDataSource , UICollectionViewDelegate {
-    
-//    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-//        let searchView: UICollectionReusableView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "SearchBar", for: indexPath)
-//        return searchView
-//    }
     
      func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
     switch kind {
@@ -129,7 +117,6 @@ extension apiTestViewController: UICollectionViewDataSource , UICollectionViewDe
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "test1CollectionViewCell", for: indexPath) as! test1CollectionViewCell
-        //cell.setup(hero: (heroRes!) )
       cell.setup(hero: (self.heroRes2[indexPath.row]) )
         heroRes3 = heroRes2
         
@@ -147,6 +134,18 @@ extension apiTestViewController: UICollectionViewDataSource , UICollectionViewDe
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let mainStoryboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let desVC = mainStoryboard.instantiateViewController(identifier: "DetailedViewController") as! DetailedViewController
+
+        desVC.img.downloaded(from: heroRes2[indexPath.row].image)
+        desVC.name_.text = heroRes2[indexPath.row].name
+        //print(heroRes2[indexPath.row].name)
+        
+        self.navigationController?.pushViewController(desVC, animated: true)
+        
     }
      
 }

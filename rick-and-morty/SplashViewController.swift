@@ -9,7 +9,6 @@ class SplashViewController: UIViewController {
         animate()
 //        UIView.animate(withDuration: 3, animations: {self.animate()} )
        
-        
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [unowned self] in
             performSegue(withIdentifier: "toMain", sender: self)
         }
@@ -23,9 +22,6 @@ class SplashViewController: UIViewController {
                rotation.isCumulative = true
                rotation.repeatCount = Float.greatestFiniteMagnitude
                spinningImage.layer.add(rotation, forKey: "rotationAnimation")
-        
-       
     }
-
 }
 

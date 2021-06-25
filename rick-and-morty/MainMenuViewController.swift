@@ -8,14 +8,12 @@ class MainMenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         Appearance()
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = true
     }
     @IBAction func didTappedCharactersButton(_ sender: UIButton) {
-       // navigationController?.pushViewController(CharactersViewController(), animated: true)
     }
     
     @IBAction func didTappedLocationsButton(_ sender: UIButton) {
@@ -36,5 +34,4 @@ class MainMenuViewController: UIViewController {
         }
         navigationController?.isNavigationBarHidden = true
     }
-
 }

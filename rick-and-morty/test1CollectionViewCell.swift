@@ -9,5 +9,4 @@ class test1CollectionViewCell: UICollectionViewCell {
         self.label.text = hero.name
         
     }
-    
 }
