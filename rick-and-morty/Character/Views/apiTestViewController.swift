@@ -30,6 +30,7 @@ class apiTestViewController: UIViewController, UISearchBarDelegate {
         
     }
     
+    
     override func viewDidAppear(_ animated: Bool) {
         print("heroRes3: " + String(heroRes3.count))
         let fil = heroRes3.filter { $0.name.hasPrefix("Albert") }
@@ -82,15 +83,23 @@ class apiTestViewController: UIViewController, UISearchBarDelegate {
         navigationController?.navigationBar.isTranslucent = false
         self.title = "Characters"
         
-        let filterButton : UINavigationItem = UINavigationItem()
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(red: 188.0/255.0, green: 214.0/255.0, blue: 90.0/255.0, alpha: 1.0)]
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "filterNavigationBarItem"), style: .plain, target: self, action: .none)
+        //navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "filterNavigationBarItem"), style: .plain, target: self, action: Selector("filterBttnTouched:"))
         
         if let layout = testingCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             layout.sectionHeadersPinToVisibleBounds = true
             layout.headerReferenceSize = CGSize(width: 100, height: 40)
 
+        }
+    }
+    
+    
+    func filterBttnTouched(sender: UIBarButtonItem) {
+
+//        performSegue(withIdentifier: "toFilter", sender: self)
+        DispatchQueue.main.asyncAfter(deadline: .now()) { [unowned self] in
+            performSegue(withIdentifier: "toFilter", sender: self)
         }
     }
 }

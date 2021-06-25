@@ -6,7 +6,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
-        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -239,7 +238,13 @@
                             <constraint firstItem="OBd-PC-hdf" firstAttribute="top" secondItem="khe-ht-s4P" secondAttribute="top" id="seB-4d-L6j"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Characters" id="qUj-i8-Llg"/>
+                    <navigationItem key="navigationItem" title="Characters" id="qUj-i8-Llg">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="filterNavigationBarItem" id="MaV-C2-am8">
+                            <connections>
+                                <segue destination="RlS-Pq-83R" kind="show" id="9eu-A7-xgb"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="alterSearchBar" destination="OBd-PC-hdf" id="LIG-BM-sDX"/>
                         <outlet property="navBarItem" destination="qUj-i8-Llg" id="1uT-bH-Rav"/>
@@ -319,41 +324,6 @@
             </objects>
             <point key="canvasLocation" x="3005.7971014492755" y="454.6875"/>
         </scene>
-        <!--Collection View Controller-->
-        <scene sceneID="g1C-h4-ANA">
-            <objects>
-                <collectionViewController id="owB-e7-O4H" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="JDb-25-drJ">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="gnF-am-l2R">
-                            <size key="itemSize" width="128" height="128"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
-                        <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="mpF-R7-lkt">
-                                <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="LCy-eI-jYJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </collectionViewCellContentView>
-                            </collectionViewCell>
-                        </cells>
-                        <connections>
-                            <outlet property="dataSource" destination="owB-e7-O4H" id="vE4-Kn-lFx"/>
-                            <outlet property="delegate" destination="owB-e7-O4H" id="R5F-Wn-8ZL"/>
-                        </connections>
-                    </collectionView>
-                    <navigationItem key="navigationItem" id="ZSh-6A-UjS"/>
-                </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="jf1-Dc-yy5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2248" y="-392"/>
-        </scene>
         <!--Dummy View Controller-->
         <scene sceneID="6mc-4J-Uxo">
             <objects>
@@ -397,20 +367,80 @@ There is nothing there!</string>
             </objects>
             <point key="canvasLocation" x="1394.2028985507247" y="1487.9464285714284"/>
         </scene>
-        <!--View Controller-->
+        <!--Filter View Controller-->
         <scene sceneID="1K7-1Z-pHI">
             <objects>
-                <viewController id="RlS-Pq-83R" sceneMemberID="viewController">
+                <viewController id="RlS-Pq-83R" userLabel="Filter View Controller" customClass="FilterViewController" customModule="rick_and_morty" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kOQ-yv-C5n">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rpr-dN-xwW">
+                                <rect key="frame" x="38.5" y="795" width="337" height="49"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="337" id="m4H-pG-orK"/>
+                                    <constraint firstAttribute="height" constant="49" id="txK-SV-BaU"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                <state key="normal" title="Apply filters">
+                                    <color key="titleColor" red="0.73333333329999995" green="0.83529411760000005" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o8n-xW-9aJ" userLabel="Reset Button">
+                                <rect key="frame" x="38.5" y="738" width="337" height="49"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="337" id="IKH-0o-udA"/>
+                                    <constraint firstAttribute="height" constant="49" id="oU8-7k-8bw"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                <state key="normal" title="Reset">
+                                    <color key="titleColor" red="0.86274509799999999" green="0.1843137255" blue="0.1843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                            </button>
+                            <pickerView tag="1" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NoP-Jo-tAn" userLabel="Status Picker View" customClass="StatusPickerView" customModule="rick_and_morty" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="183" width="414" height="162"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" red="0.31372549020000001" green="0.15686274510000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
+                            </pickerView>
+                            <pickerView tag="2" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yV7-YS-3Yp" userLabel="Gender Picker View" customClass="GenderPickerView" customModule="rick_and_morty" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="388" width="414" height="162"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            </pickerView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Raf-56-sHC">
+                                <rect key="frame" x="20" y="154" width="57" height="28"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="21"/>
+                                <color key="textColor" red="0.73333333329999995" green="0.83529411760000005" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Gender" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VTw-OQ-oXR">
+                                <rect key="frame" x="20" y="353" width="73" height="28"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="21"/>
+                                <color key="textColor" red="0.73333333329999995" green="0.83529411760000005" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="hDg-sK-pRW"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" red="0.14117647059999999" green="0.15686274510000001" blue="0.1843137255" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="rpr-dN-xwW" firstAttribute="top" secondItem="o8n-xW-9aJ" secondAttribute="bottom" constant="8" id="BgR-AO-K6w"/>
+                            <constraint firstItem="rpr-dN-xwW" firstAttribute="centerX" secondItem="kOQ-yv-C5n" secondAttribute="centerX" id="Fo1-H5-MNi"/>
+                            <constraint firstItem="o8n-xW-9aJ" firstAttribute="centerX" secondItem="kOQ-yv-C5n" secondAttribute="centerX" id="deL-8f-Daa"/>
+                            <constraint firstItem="hDg-sK-pRW" firstAttribute="bottom" secondItem="rpr-dN-xwW" secondAttribute="bottom" constant="18" id="yk7-Lb-PGR"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Filter" id="PtO-K4-xaX"/>
+                    <connections>
+                        <outlet property="applyButton" destination="rpr-dN-xwW" id="pWc-Sx-wDh"/>
+                        <outlet property="genderPicker" destination="yV7-YS-3Yp" id="eHD-3Z-gJv"/>
+                        <outlet property="resetButton" destination="o8n-xW-9aJ" id="bgl-kV-d4t"/>
+                        <outlet property="statusPicker" destination="NoP-Jo-tAn" id="HrW-qy-ybP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KOh-6v-AhN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2278" y="1488"/>
+            <point key="canvasLocation" x="2418.840579710145" y="1487.9464285714284"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ywc-Kq-bz7">
@@ -439,6 +469,7 @@ There is nothing there!</string>
         <image name="characterImage_light" width="650" height="406.5"/>
         <image name="dummy_image" width="212" height="258"/>
         <image name="episodesImage_light" width="960" height="540"/>
+        <image name="filterNavigationBarItem" width="25" height="25"/>
         <image name="loadingSpinner" width="302.5" height="400"/>
         <image name="loadingTitle" width="640" height="272"/>
         <image name="locationsImage_light" width="512" height="237.5"/>
