@@ -1,5 +1,7 @@
 import UIKit
 
+var filterParameter = (status: "Alive", gender: "Female")
+
 class FilterViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
     @IBOutlet weak var statusPicker: UIPickerView!
@@ -11,6 +13,8 @@ class FilterViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     let pickerData = ["Alive","Dead","Unknown"]
     let pickerData2 = ["Female","Male","Genderless","Unknown"]
     
+    var statusPickerSelection = "Alive", genderPickerSelection = "Female"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         Appearance()
@@ -20,7 +24,25 @@ class FilterViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         genderPicker.dataSource = self
     }
     
+    @IBAction func applyButtonPressed(_ sender: UIButton) {
+        filterParameter.status = statusPickerSelection
+        filterParameter.gender = genderPickerSelection
 
+        filtering = true
+        filteredArray = heroRes3.filter{$0.status.contains(filterParameter.status) }
+        
+    }
+    
+    @IBAction func resetButtonPressed(_ sender: UIButton) {
+        genderPicker.reloadAllComponents()
+        statusPicker.reloadAllComponents()
+        statusPicker.selectRow(0, inComponent: 0, animated: true)
+        genderPicker.selectRow(0, inComponent: 0, animated: true)
+        
+        filtering = false
+
+    }
+    
     func Appearance(){
         applyButton.layer.cornerRadius = 10
         applyButton.layer.borderWidth = 1
@@ -58,22 +80,18 @@ class FilterViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     
            func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-              let selectedText = pickerData[row]
+            
+            if pickerView.tag == 1 {
+                  statusPickerSelection = pickerData[row]
+                    print(statusPickerSelection)
+              } else {
+                  genderPickerSelection = pickerData2[row]
+                print(genderPickerSelection)
+              }
+            
            }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         1
-    }
-}
-
-class StatusPickerView : UIPickerView, UIPickerViewDelegate{
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return "status1"
-    }
-}
-
-class GenderPickerView : UIPickerView, UIPickerViewDelegate{
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return "status2"
     }
 }

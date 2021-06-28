@@ -2,16 +2,20 @@ import UIKit
 import Network
 
 var heroRes3 : [Hero] = []
+var filtering = false
+var filteredArray = [Hero]()
 
 class apiTestViewController: UIViewController {
     @IBOutlet weak var testingCollectionView: UICollectionView!
     @IBOutlet weak var navBarItem: UINavigationItem!
-    @IBOutlet weak var alterSearchBar: UISearchBar!
     
     var heroRes2 = [Hero]()
     var searching = false
+    
     var searched = [Hero]()
+    
     let searchController = UISearchController(searchResultsController: nil)
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,15 +35,13 @@ class apiTestViewController: UIViewController {
         testingCollectionView.dataSource = self
         testingCollectionView.delegate = self
         testingCollectionView.collectionViewLayout = UICollectionViewFlowLayout()
-        
     }
     
     
     override func viewDidAppear(_ animated: Bool) {
-        print("heroRes3: " + String(heroRes3.count))
-        let fil = heroRes3.filter { $0.name.hasPrefix("Albert") }
-        print(fil.count)
-        
+       // print("heroRes3: " + String(heroRes3.count))
+
+        testingCollectionView.reloadData()
     }
     
     func getFromJson(url: URL, index: Int)  {
@@ -60,25 +62,7 @@ class apiTestViewController: UIViewController {
                 print(error.localizedDescription)
                 print("ERROR PARSING")
             }
-            
-            print(self.heroRes2.count)
         }).resume()
-        
-    }
-    
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        self.heroRes2.removeAll()
-        for item in heroRes3 {
-            if (item.name.lowercased().contains((alterSearchBar.text?.lowercased())!)) {
-                self.heroRes2.append(item)
-            }
-        }
-        
-        if (alterSearchBar.text!.isEmpty) {
-            self.heroRes2 = heroRes3
-        }
-        self.testingCollectionView.reloadData()
     }
     
     
@@ -88,8 +72,6 @@ class apiTestViewController: UIViewController {
         self.title = "Characters"
         
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(red: 188.0/255.0, green: 214.0/255.0, blue: 90.0/255.0, alpha: 1.0)]
-
-        //navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "filterNavigationBarItem"), style: .plain, target: self, action: Selector("filterBttnTouched:"))
         
         if let layout = testingCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             layout.sectionHeadersPinToVisibleBounds = true
@@ -119,11 +101,10 @@ class apiTestViewController: UIViewController {
         definesPresentationContext = true
         searchController.searchBar.placeholder = "Введите имя"
     }
+  
 }
 
-
-
-extension apiTestViewController: UICollectionViewDataSource , UICollectionViewDelegate, UISearchResultsUpdating, UISearchBarDelegate {
+extension apiTestViewController: UICollectionViewDataSource , UICollectionViewDelegate, UISearchResultsUpdating, UISearchBarDelegate, UIPickerViewDelegate {
     func updateSearchResults(for searchController: UISearchController) {
         let searchText = searchController.searchBar.text!
         
@@ -144,6 +125,7 @@ extension apiTestViewController: UICollectionViewDataSource , UICollectionViewDe
             searched = heroRes3
         }
         testingCollectionView.reloadData()
+        
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -153,24 +135,18 @@ extension apiTestViewController: UICollectionViewDataSource , UICollectionViewDe
     }
     
     
-     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-    switch kind {
-    case UICollectionView.elementKindSectionHeader:
-        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "SearchBar", for: indexPath) as! SearchBarView
-        headerView.searchBar.barTintColor = .white
-        headerView.searchBar.tintColor = .white
-        return headerView
-    default:
-        assert(false, "Unexpected element kind")
-    }
-    }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        if filtering {
+            return filteredArray.count
+        } else {
+        
         if searching {
             return searched.count
         }
         else {
-        return 16
+            return 30
+        }
         }
     }
     
@@ -179,10 +155,18 @@ extension apiTestViewController: UICollectionViewDataSource , UICollectionViewDe
       
         heroRes3 = heroRes2
         
-        if searching {
-            cell.setup(hero: self.searched[indexPath.row])
+        if filtering {
+            cell.setup(hero: filteredArray[indexPath.row])
+            //print("filtering true, filteredArray.count:" + String(filteredArray.count))
         } else {
-            cell.setup(hero: (self.heroRes2[indexPath.row]) )
+            if searching {
+                //print("filtering false, searching true")
+                cell.setup(hero: self.searched[indexPath.row])
+        } else {
+            //print("filtering false, searching false")
+            cell.setup(hero: (heroRes3[indexPath.row]))
+        }
+            
         }
         
         cell.layer.borderColor = UIColor.black.cgColor
@@ -190,14 +174,9 @@ extension apiTestViewController: UICollectionViewDataSource , UICollectionViewDe
         cell.layer.cornerRadius = 20
         cell.image.backgroundColor = .white
         cell.image.contentMode = .scaleAspectFill
-        
-       
-        
-        
+ 
         return cell
     }
-    
-   
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         1
@@ -209,12 +188,9 @@ extension apiTestViewController: UICollectionViewDataSource , UICollectionViewDe
 
         desVC.img.downloaded(from: heroRes2[indexPath.row].image)
         desVC.name_.text = heroRes2[indexPath.row].name
-        //print(heroRes2[indexPath.row].name)
         
         self.navigationController?.pushViewController(desVC, animated: true)
-        
     }
-     
 }
 
 extension apiTestViewController : UICollectionViewDelegateFlowLayout {

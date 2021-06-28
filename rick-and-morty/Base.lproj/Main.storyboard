@@ -132,7 +132,7 @@
         <!--Characters-->
         <scene sceneID="9Fq-kt-jIX">
             <objects>
-                <viewController id="vT4-cT-PYm" customClass="apiTestViewController" customModule="rick_and_morty" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CharactersViewController" id="vT4-cT-PYm" customClass="apiTestViewController" customModule="rick_and_morty" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8vT-9O-Tjq">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -188,54 +188,17 @@
                                 <collectionReusableView key="sectionHeaderView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="SearchBar" id="y3A-qj-mTO" customClass="SearchBarView" customModule="rick_and_morty" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="354" height="75"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <searchBar hidden="YES" contentMode="redraw" barStyle="black" text="Hello" placeholder="Введите имя" translatesAutoresizingMaskIntoConstraints="NO" id="sSP-gY-f4X">
-                                            <rect key="frame" x="0.0" y="0.0" width="354" height="56"/>
-                                            <color key="backgroundColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="56" id="zz1-k4-yc3"/>
-                                            </constraints>
-                                            <color key="barTintColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                            <textInputTraits key="textInputTraits" autocorrectionType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
-                                            <scopeButtonTitles>
-                                                <string>Title</string>
-                                                <string>Title</string>
-                                            </scopeButtonTitles>
-                                            <connections>
-                                                <outlet property="delegate" destination="vT4-cT-PYm" id="JZe-IS-Il9"/>
-                                            </connections>
-                                        </searchBar>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="sSP-gY-f4X" secondAttribute="trailing" id="4Du-kJ-zW9"/>
-                                        <constraint firstItem="sSP-gY-f4X" firstAttribute="leading" secondItem="y3A-qj-mTO" secondAttribute="leading" id="mzw-aZ-3aO"/>
-                                        <constraint firstItem="sSP-gY-f4X" firstAttribute="top" secondItem="y3A-qj-mTO" secondAttribute="top" id="n5f-97-sHg"/>
-                                    </constraints>
-                                    <connections>
-                                        <outlet property="searchBar" destination="sSP-gY-f4X" id="KcT-8V-hrO"/>
-                                    </connections>
                                 </collectionReusableView>
                             </collectionView>
-                            <searchBar hidden="YES" contentMode="redraw" placeholder="Введите имя" translatesAutoresizingMaskIntoConstraints="NO" id="OBd-PC-hdf">
-                                <rect key="frame" x="0.0" y="88" width="414" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="AQA-8R-OpB"/>
-                                </constraints>
-                                <color key="barTintColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="search" smartInsertDeleteType="no" smartQuotesType="no"/>
-                            </searchBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="khe-ht-s4P"/>
                         <color key="backgroundColor" red="0.14117647059999999" green="0.15686274510000001" blue="0.1843137255" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="UMb-kb-qBg" firstAttribute="trailing" secondItem="khe-ht-s4P" secondAttribute="trailing" constant="-30" id="0ry-ny-OM6"/>
                             <constraint firstItem="UMb-kb-qBg" firstAttribute="leading" secondItem="khe-ht-s4P" secondAttribute="leading" constant="30" id="4kh-LG-Vtm"/>
-                            <constraint firstItem="OBd-PC-hdf" firstAttribute="trailing" secondItem="khe-ht-s4P" secondAttribute="trailing" id="AU4-Kz-6E1"/>
-                            <constraint firstItem="OBd-PC-hdf" firstAttribute="leading" secondItem="khe-ht-s4P" secondAttribute="leading" id="JgG-4l-OoU"/>
                             <constraint firstItem="khe-ht-s4P" firstAttribute="bottom" secondItem="UMb-kb-qBg" secondAttribute="bottom" id="i6n-iC-z7R"/>
                             <constraint firstItem="UMb-kb-qBg" firstAttribute="top" secondItem="khe-ht-s4P" secondAttribute="top" constant="45" id="nAM-lI-SHg"/>
                             <constraint firstItem="UMb-kb-qBg" firstAttribute="centerX" secondItem="8vT-9O-Tjq" secondAttribute="centerX" id="ne9-Hi-mHh"/>
-                            <constraint firstItem="OBd-PC-hdf" firstAttribute="top" secondItem="khe-ht-s4P" secondAttribute="top" id="seB-4d-L6j"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Characters" id="qUj-i8-Llg">
@@ -246,7 +209,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="alterSearchBar" destination="OBd-PC-hdf" id="LIG-BM-sDX"/>
                         <outlet property="navBarItem" destination="qUj-i8-Llg" id="1uT-bH-Rav"/>
                         <outlet property="testingCollectionView" destination="UMb-kb-qBg" id="6F6-TU-nTz"/>
                         <segue destination="fvF-0x-rii" kind="show" id="mqC-2C-SJ0"/>
@@ -385,6 +347,9 @@ There is nothing there!</string>
                                 <state key="normal" title="Apply filters">
                                     <color key="titleColor" red="0.73333333329999995" green="0.83529411760000005" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="applyButtonPressed:" destination="RlS-Pq-83R" eventType="touchUpInside" id="PQ9-r5-GbU"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o8n-xW-9aJ" userLabel="Reset Button">
                                 <rect key="frame" x="38.5" y="738" width="337" height="49"/>
@@ -396,6 +361,9 @@ There is nothing there!</string>
                                 <state key="normal" title="Reset">
                                     <color key="titleColor" red="0.86274509799999999" green="0.1843137255" blue="0.1843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="resetButtonPressed:" destination="RlS-Pq-83R" eventType="touchUpInside" id="maS-2R-fl5"/>
+                                </connections>
                             </button>
                             <pickerView tag="1" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NoP-Jo-tAn" userLabel="Status Picker View" customClass="StatusPickerView" customModule="rick_and_morty" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="183" width="414" height="162"/>
